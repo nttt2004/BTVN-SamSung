@@ -1,0 +1,13 @@
+Chu trình Euler:
+- Đồ thị 1 không có chu trình Euler vì đồ thị không liên thông.
+- Đồ thị 2 có chu trình Euler vì đồ thị liên thông và mỗi đỉnh đều có bậc chẵn. 
+- Đồ thị 3 có chu trình Euler vì tương tự đồ thị 2.
+- Đồ thị 4 không có chu trình Euler vì đỉnh 0 có bậc lẻ.
+
+Chu trình Hamilton:
+- Đồ thị 1, 2, 3 đều có chu trình Hamilton vì chúng liên thông và có đủ cạnh để kết nối tất cả các đỉnh một lần.
+- Đồ thị 4 không chắc chắn có chu trình Hamilton.
+
+Như vậy:
+- Có chu trình Euler: Đồ thị 2, 3
+- Có chu trình Hamilton: Đồ thị 1, 2, 3

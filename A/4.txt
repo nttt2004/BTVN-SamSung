@@ -1,0 +1,18 @@
+* Chứng minh phần "chỉ khi":
+
+Giả sử đồ thị G không chứa chu trình độ dài lẻ. Ta sẽ chứng minh G là đồ thị hai mầu bằng cách tô màu các đỉnh theo thuật toán:
+
+- Khởi tạo, tô màu đỉnh 1 bằng màu X (ví dụ đỏ)
+- Duyệt DFS từ đỉnh 1, nếu gặp đỉnh chưa được tô màu, tô nó bằng màu khác với đỉnh trước đó
+
+Vì G không có chu trình lẻ nên quá trình tô màu luôn hợp lệ, không bao giờ tô cùng màu 2 đỉnh kề nhau. Như vậy G là đồ thị hai mầu.
+
+* Chứng minh phần "khi":
+
+Giả sử G là đồ thị hai mầu. Ta sẽ chứng minh bằng phản chứng rằng G không chứa chu trình lẻ. 
+
+Giả sử G có chứa chu trình lẻ C. Khi đó các đỉnh trên C phải được tô liên tiếp 2 màu khác nhau. Nhưng vì C là chu trình nên đỉnh đầu và đỉnh cuối là cùng một đỉnh nhưng lại có 2 màu khác nhau. Điều này mâu thuẫn với giả thiết G là đồ thị hai mầu. 
+
+Vậy G không thể chứa chu trình lẻ.
+
+Như vậy đã chứng minh được đồ thị là đồ thị hai mầu khi và chỉ khi nó không chứa chu trình độ dài lẻ.
