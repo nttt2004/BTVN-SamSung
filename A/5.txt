@@ -1,13 +1,7 @@
-5, Chứng minh:
+Chứng minh:
 
-Giả sử G là đồ thị không có điểm articulation. Xét 2 đỉnh bất kỳ s, t trong G và một đường đi P nối s và t. 
+Giả sử G là đồ thị không có điểm articulation. Cho đỉnh bất kỳ s, t trong G và đường đi P nối chúng. Do G liên thông, tồn tại đường đi P. Xóa bất kỳ đỉnh nào trên P không làm G mất tính liên thông vì G không có điểm articulation.
 
-Vì G liên thông nên tồn tại đường đi P. Do G không có điểm articulation nên khi xóa bất kỳ đỉnh nào trên P thì G vẫn liên thông. Nghĩa là vẫn tồn tại đường đi khác Q nối s và t sau khi xóa điểm đó. 
+Lặp lại quá trình trên với mỗi đỉnh trên P, ta thu được đường đi Q nối s và t sao cho P và Q không có đỉnh chung. Như vậy, với mọi cặp đỉnh s, t trong G, luôn tồn tại 2 đường đi không giao nhau nối chúng.
 
-Lặp lại quá trình trên với mỗi đỉnh trên P. Ta thu được đường đi Q nối s và t sao cho P và Q không có đỉnh chung. Tức P và Q là 2 đường đi không giao nhau.
-
-Suy ra với mọi cặp đỉnh s, t trong G luôn tồn tại 2 đường đi không giao nhau nối chúng. 
-
-Như vậy G là đồ thị biconnected.
-
-Chúng ta đã chứng minh được rằng một đồ thị không có điểm articulation thì là đồ thị biconnected.
+Suy ra, G là đồ thị biconnected khi không có điểm articulation.

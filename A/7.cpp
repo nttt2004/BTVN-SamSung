@@ -2,57 +2,56 @@
 #include <queue>
 using namespace std;
 
-const int M = 10;
-const int N = 10;
+const int ROWS = 10;
+const int COLS = 10;
 
-bool inside(int x, int y) {
-  return x >= 0 && x < M && y >= 0 && y < N;  
+bool isValid(int x, int y) {
+  return x >= 0 && x < ROWS && y >= 0 && y < COLS;
 }
 
-void floodFill(int image[M][N], int x, int y, int newColor, int oldColor) {
-  if (image[x][y] != oldColor) return;
+void floodFill(int matrix[ROWS][COLS], int startX, int startY, int newColor, int oldColor) {
+  if (matrix[startX][startY] != oldColor) return;
 
-  queue<pair<int, int>> q; 
-  q.push({x, y});
-  image[x][y] = newColor;
+  queue<pair<int, int>> q;
+  q.push({startX, startY});
+  matrix[startX][startY] = newColor;
 
   int dx[] = {1, 0, -1, 0};
   int dy[] = {0, 1, 0, -1};
 
   while (!q.empty()) {
-    pair<int, int> cur = q.front();
+    pair<int, int> current = q.front();
     q.pop();
 
     for (int i = 0; i < 4; i++) {
-      int nx = cur.first + dx[i];
-      int ny = cur.second + dy[i];
+      int nx = current.first + dx[i];
+      int ny = current.second + dy[i];
 
-      if (inside(nx, ny) && image[nx][ny] == oldColor) {
+      if (isValid(nx, ny) && matrix[nx][ny] == oldColor) {
         q.push({nx, ny});
-        image[nx][ny] = newColor;  
+        matrix[nx][ny] = newColor;
       }
     }
   }
 }
 
 int main() {
+  int matrix[ROWS][COLS] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                            {1, 1, 1, 1, 1, 1, 0, 0, 0, 1},
+                            {1, 0, 0, 1, 1, 0, 1, 1, 0, 1},
+                            {1, 2, 2, 2, 2, 0, 1, 0, 0, 1},
+                            {1, 1, 1, 2, 2, 0, 1, 0, 0, 1},
+                            {1, 1, 1, 2, 2, 2, 2, 0, 0, 1},
+                            {1, 1, 1, 1, 1, 2, 1, 1, 0, 1},
+                            {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+                            {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+                            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
-  int image[M][N] = {{1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                     {1, 1, 1, 1, 1, 1, 0, 0, 0, 1},
-                     {1, 0, 0, 1, 1, 0, 1, 1, 0, 1},
-                     {1, 2, 2, 2, 2, 0, 1, 0, 0, 1},
-                     {1, 1, 1, 2, 2, 0, 1, 0, 0, 1},
-                     {1, 1, 1, 2, 2, 2, 2, 0, 0, 1},
-                     {1, 1, 1, 1, 1, 2, 1, 1, 0, 1},
-                     {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-                     {1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
-  
-  floodFill(image, 1, 1, 5, 1);
+  floodFill(matrix, 1, 1, 5, 1);
 
-  for(int i = 0; i < M; i++) {
-    for(int j = 0; j < N; j++) {
-      cout << image[i][j] << " ";
+  for(int i = 0; i < ROWS; i++) {
+    for(int j = 0; j < COLS; j++) {
+      cout << matrix[i][j] << " ";
     }
     cout << endl;
   }

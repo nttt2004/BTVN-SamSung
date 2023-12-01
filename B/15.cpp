@@ -1,31 +1,31 @@
-#include <iostream> 
+#include <iostream>
 #include <queue>
-
+#include <vector>
 using namespace std;
 
-const int N = 100;
+const int MAX_N = 100;
 
-vector<int> adj[N]; 
-int indeg[N];  
+vector<int> adjacency_list[MAX_N];
+int in_degree[MAX_N];
 
-void topologicalSort(int V) {
+void topologicalSort(int num_vertices) {
   queue<int> q;
-  
-  for(int u = 0; u < V; u++) {
-    if(indeg[u] == 0) {
-      q.push(u); 
+
+  for(int vertex = 0; vertex < num_vertices; vertex++) {
+    if(in_degree[vertex] == 0) {
+      q.push(vertex);
     }
   }
-  
+
   while(!q.empty()) {
-    int u = q.front();
+    int vertex = q.front();
     q.pop();
-    cout << u << " ";
-    
-    for(int v: adj[u]) {
-      indeg[v]--;
-      if(indeg[v] == 0) {
-        q.push(v);  
+    cout << vertex << " ";
+
+    for(int adjacent_vertex : adjacency_list[vertex]) {
+      in_degree[adjacent_vertex]--;
+      if(in_degree[adjacent_vertex] == 0) {
+        q.push(adjacent_vertex);
       }
     }
   }
@@ -33,18 +33,18 @@ void topologicalSort(int V) {
 
 int main() {
 
-  int V, E;
-  cin >> V >> E;
+  int num_vertices, num_edges;
+  cin >> num_vertices >> num_edges;
 
-  for(int i = 0; i < E; i++) {
-    int u, v;
-    cin >> u >> v;
+  for(int i = 0; i < num_edges; i++) {
+    int vertex_u, vertex_v;
+    cin >> vertex_u >> vertex_v;
 
-    adj[u].push_back(v); 
-    indeg[v]++; 
+    adjacency_list[vertex_u].push_back(vertex_v);
+    in_degree[vertex_v]++;
   }
-  
-  topologicalSort(V);
-  
+
+  topologicalSort(num_vertices);
+
   return 0;
 }

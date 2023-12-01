@@ -1,42 +1,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int INF = 1e9;  
+const int INF = 1e9;
 
-vector<pair<int, int>> adj[MAX_N];  
-bool visited[MAX_N];
-int dist[MAX_N];
+vector<pair<int, int>> adjacency_list[MAX_N];
+bool is_visited[MAX_N];
+int distances[MAX_N];
 
-int prim(int V) {
-  int total = 0;
-  
-  priority_queue<pair<int, int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+int prim(int num_vertices) {
+  int total_weight = 0;
 
-  for(int u = 0; u < V; u++) {
-    dist[u] = INF;
+  priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+
+  for(int vertex = 0; vertex < num_vertices; vertex++) {
+    distances[vertex] = INF;
   }
-  
-  dist[0] = 0;
+
+  distances[0] = 0;
   pq.push({0, 0});
 
   while(!pq.empty()) {
-    int u = pq.top().second; 
+    int current_vertex = pq.top().second;
     pq.pop();
-    
-    if(visited[u]) continue;
-    
-    visited[u] = true;
-    total += dist[u];
-    
-    for(auto ed: adj[u]) {
-      int v = ed.first, w = ed.second;
-      
-      if(!visited[v] && w < dist[v]) {
-        dist[v] = w;
-        pq.push({dist[v], v});  
+
+    if(is_visited[current_vertex]) continue;
+
+    is_visited[current_vertex] = true;
+    total_weight += distances[current_vertex];
+
+    for(auto edge : adjacency_list[current_vertex]) {
+      int next_vertex = edge.first, weight = edge.second;
+
+      if(!is_visited[next_vertex] && weight < distances[next_vertex]) {
+        distances[next_vertex] = weight;
+        pq.push({distances[next_vertex], next_vertex});
       }
     }
   }
-  
-  return total; 
+
+  return total_weight;
 }

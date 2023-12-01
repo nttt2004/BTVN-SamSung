@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-int countGraphs(int V, int E) {
+int counts(int V, int E) {
   if(E > V*(V-1)/2 || E < 0)
     return 0;
 
@@ -15,12 +15,7 @@ int countGraphs(int V, int E) {
 
 int main() {
   int V, E;
-  cout << "Nhap so dinh V: ";
-  cin >> V;
-  cout << "Nhap so canh E: ";
-  cin >> E;
-
-  cout << "So do thi vo huong khac nhau la: " << countGraphs(V, E);
-
+  cin >> V >> E;
+  cout << "So do thi vo huong khac nhau la: " << counts(V, E);
   return 0;
 }

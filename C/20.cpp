@@ -3,70 +3,66 @@
 
 using namespace std;
 
-double w[MAX_N][MAX_N]; // Adjacency matrix 
-double x[MAX_N], y[MAX_N]; // Vertex coordinates
+const int MAX_N = 100;
 
-bool visited[MAX_N];
-vector<pair<double, pair<int, int>>> edges; 
-vector<pair<int, int>> spanningTree;
+double weight[MAX_N][MAX_N];
+double xCoord[MAX_N], yCoord[MAX_N];
 
-// Draw graph
+bool nodeVisited[MAX_N];
+vector<pair<double, pair<int, int>>> allEdges;
+vector<pair<int, int>> minimumSpanningTree;
+
 void drawGraph() {
   glClear(GL_COLOR_BUFFER_BIT);
 
-  glColor3f(1.0, 0.0, 0.0);  
+  glColor3f(1.0, 0.0, 0.0);
   glPointSize(5);
 
-  // Draw edges
-  for (auto e : edges) {
-    int u = e.second.first;
-    int v = e.second.second;
+  for (auto edge : allEdges) {
+    int start = edge.second.first;
+    int end = edge.second.second;
 
     glBegin(GL_LINES);
-    glVertex2d(x[u], y[u]);
-    glVertex2d(x[v], y[v]);
+    glVertex2d(xCoord[start], yCoord[start]);
+    glVertex2d(xCoord[end], yCoord[end]);
     glEnd();
   }
 
-  // Draw vertices
-  for (int u = 0; u < V; u++) {
+  for (int vertex = 0; vertex < V; vertex++) {
     glBegin(GL_POINTS);
-    glVertex2d(x[u], y[u]);
+    glVertex2d(xCoord[vertex], yCoord[vertex]);
     glEnd();
   }
 
-  glFlush(); 
+  glFlush();
 }
 
-// Kruskal's algorithm
-void kruskal() {  
-  sort(edges.begin(), edges.end());
+void runKruskal() {
+  sort(allEdges.begin(), allEdges.end());
 
-  for (auto e : edges) {
-    // Draw new added edge 
+  for (auto edge : allEdges) {
     drawGraph();
 
-    int u = e.second.first;
-    int v = e.second.second;
-    
-    if (!visited[u] || !visited[v]) {
-      spanningTree.push_back({u, v});
+    int start = edge.second.first;
+    int end = edge.second.second;
 
-      visited[u] = visited[v] = true;
+    if (!nodeVisited[start] || !nodeVisited[end]) {
+      minimumSpanningTree.push_back({start, end});
+
+      nodeVisited[start] = nodeVisited[end] = true;
     }
 
     glutPostRedisplay();
-    glutSwapBuffers(); 
+    glutSwapBuffers();
   }
 }
 
 int main(int argc, char** argv) {
   glutInit(&argc, argv);
-  // Initialize OpenGL
   Init();
 
-  kruskal(); // Run algorithm  
-  
+  runKruskal();
+
   glutMainLoop();
 
   return 0;

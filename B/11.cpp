@@ -1,60 +1,57 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <algorithm>
 using namespace std;
 
-vector<int> adj[100];
-bool visited[100]; 
+vector<int> adjacency_list[100];
+bool visited[100];
 
-void topologicalSort(int v) {
-  visited[v] = true;
-  for(int u: adj[v]) {
-    if(!visited[u])
-      topologicalSort(u);
+void topologicalSort(int vertex, stack<int>& topoOrder) {
+  visited[vertex] = true;
+  for(int adjacent_vertex : adjacency_list[vertex]) {
+    if(!visited[adjacent_vertex])
+      topologicalSort(adjacent_vertex, topoOrder);
   }
-  stack<int> s;
-  s.push(v);
+  topoOrder.push(vertex);
 }
 
-bool hamiltonianPath(int V) {
-  stack<int> topoOrder; 
-  
-  for(int i = 0; i < V; i++)
+bool hasHamiltonianPath(int num_vertices) {
+  stack<int> topo_order;
+
+  for(int i = 0; i < num_vertices; i++)
     if(!visited[i])
-      topologicalSort(i);
+      topologicalSort(i, topo_order);
 
-  int src = topoOrder.top();  
+  int source = topo_order.top();
 
-  while(!topoOrder.empty()) {
-    int u = topoOrder.top();
-    topoOrder.pop();
+  while(!topo_order.empty()) {
+    int u = topo_order.top();
+    topo_order.pop();
 
-    if(topoOrder.size() > 0) {
-      int v = topoOrder.top();
-      if(find(adj[u].begin(), adj[u].end(), v) == adj[u].end())
-         return false; 
+    if(topo_order.size() > 0) {
+      int v = topo_order.top();
+      if(find(adjacency_list[u].begin(), adjacency_list[u].end(), v) == adjacency_list[u].end())
+         return false;
     }
   }
-
   return true;
 }
 
 int main() {
+  int num_vertices, num_edges;
+  cin >> num_vertices >> num_edges;
 
-  int V, E;
-  cin >> V >> E;
-
-  // Nh?p c?nh 
-  for(int i = 0; i < E; i++) {
-    int u, v;
-    cin >> u >> v;
-    adj[u].push_back(v); 
+  for(int i = 0; i < num_edges; i++) {
+    int vertex_u, vertex_v;
+    cin >> vertex_u >> vertex_v;
+    adjacency_list[vertex_u].push_back(vertex_v);
   }
 
-  if (hamiltonianPath(V)) 
+  if (hasHamiltonianPath(num_vertices))
     cout << "Co duong di Hamilton";
   else
-    cout << "Khong co duong di Hamilton";  
+    cout << "Khong co duong di Hamilton";
 
   return 0;
 }

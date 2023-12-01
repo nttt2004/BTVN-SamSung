@@ -5,75 +5,72 @@
 using namespace std;
 
 struct Edge {
-  int u, v, w;
+  int start, end, weight;
 };
 
-vector<Edge> spanningTree;
-vector<Edge> edges; 
+vector<Edge> minimumSpanningTree;
+vector<Edge> allEdges;
 
-int V, E;
+int vertices, edges;
 
-int findRoot(int u) {
-  for(Edge e: spanningTree)
-    if (e.u == u || e.v == u)
-      return e.u == u ? e.v : e.u;
+int findRoot(int vertex) {
+  for(Edge edge: minimumSpanningTree)
+    if (edge.start == vertex || edge.end == vertex)
+      return edge.start == vertex ? edge.end : edge.start;
 
-  return -1;    
+  return -1;
 }
 
-void addEdge(Edge e) {
-  int rootU = findRoot(e.u); 
-  int rootV = findRoot(e.v);
+void addEdge(Edge newEdge) {
+  int rootStart = findRoot(newEdge.start);
+  int rootEnd = findRoot(newEdge.end);
 
-  if(rootU != rootV) {
-    spanningTree.push_back(e);
+  if(rootStart != rootEnd) {
+    minimumSpanningTree.push_back(newEdge);
   } else {
-    // Tim canh co trong so lon nhat trong chu trinh   
-    int maxW = -1, maxEdge;
-    for(Edge ed: spanningTree) {
-      if((ed.u == e.u || ed.u == e.v) && 
-         (ed.v == e.u || ed.v == e.v)) {
-        
-        if(ed.w > maxW) {
-          maxW = ed.w;
-          maxEdge = ed;
-        } 
+    // Find the edge with the maximum weight in the cycle
+    int maxWeight = -1;
+    Edge maxWeightEdge;
+    for(Edge existingEdge: minimumSpanningTree) {
+      if((existingEdge.start == newEdge.start || existingEdge.start == newEdge.end) &&
+         (existingEdge.end == newEdge.start || existingEdge.end == newEdge.end)) {
+
+        if(existingEdge.weight > maxWeight) {
+          maxWeight = existingEdge.weight;
+          maxWeightEdge = existingEdge;
+        }
       }
-    }  
-
-    // Xoa canh co trong so lon nhat
-    spanningTree.erase(
-      find(spanningTree.begin(), spanningTree.end(), maxEdge)  
+    }
+    minimumSpanningTree.erase(
+      find(minimumSpanningTree.begin(), minimumSpanningTree.end(), maxWeightEdge)
     );
-
-    // Them canh e vao cay
-    spanningTree.push_back(e); 
+    minimumSpanningTree.push_back(newEdge);
   }
 }
 
 int vyssotsky() {
-  sort(edges.begin(), edges.end(), 
-       [](Edge a, Edge b) { return a.w < b.w; });
+  sort(allEdges.begin(), allEdges.end(),
+       [](Edge a, Edge b) { return a.weight < b.weight; });
 
-  for(Edge e: edges)  
-    addEdge(e);
+  for(Edge edge: allEdges)
+    addEdge(edge);
 
-  int total = 0;
-  for(Edge e: spanningTree)  
-    total += e.w;
+  int totalWeight = 0;
+  for(Edge edge: minimumSpanningTree)
+    totalWeight += edge.weight;
 
-  return total;   
+  return totalWeight;
 }
 
 int main() {
-  cin >> V >> E;
-  
-  for(int i = 0; i < E; i++) {
-    int u, v, w;
-    cin >> u >> v >> w;  
-    edges.push_back({u, v, w});
+  cin >> vertices >> edges;
+
+  for(int i = 0; i < edges; i++) {
+    int start, end, weight;
+    cin >> start >> end >> weight;
+    allEdges.push_back({start, end, weight});
   }
-  
+
   cout << vyssotsky();
 
   return 0;
