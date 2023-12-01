@@ -1,0 +1,18 @@
+Ý tưởng thuật toán tìm cây bao trùm min chứa tập cạnh S như sau:
+
+1. Thêm tất cả các cạnh trong S vào cây T
+
+2. Với mỗi thành phần liên thông Ui của T:
+
+    - Lấy đồ thị con Gi của G chứa các đỉnh trong Ui
+    
+    - Đối với mỗi cạnh (u, v) trong Gi
+        + Nối 2 tập chứa u và v trong T bằng Union-find
+        + Nếu kết quả kết nối < w(u, v) thì bỏ qua
+        + Ngược lại, thêm (u, v) vào T
+        
+3. T là cây bao trùm min chứa S.
+   
+Độ phức tạp: O(E.logV)  
+
+* Ý tưởng chính là dùng Union-find để "hàn" ghép từng thành phần liên thông với nhau một cách tối ưu, đảm bảo tính chất tối thiểu.

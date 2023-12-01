@@ -1,0 +1,18 @@
+19, Ý tưởng thuật toán tìm tất cả các cạnh khó trong đồ thị trong O(ElogE) như sau:
+
+1. Tìm cây bao trùm nhỏ nhất ban đầu của đồ thị bằng thuật toán Kruskal hay Prim trong O(ElogE)
+
+2. Với mỗi cạnh e = (u, v) trong cây bao trùm:
+
+    2.1 Xóa cạnh e, tìm kết nối ngắn nhất giữa 2 tập có u và v bằng Union-Find
+
+    2.2 Nếu kết nối ngắn nhất có trọng số > w(e) thì e là cạnh khó  
+
+3. Độ phức tạp:
+    - B1: O(ElogE)
+    - B2: 
+      + Xóa cạnh và tìm kết nối: O(E.alogE) ~ O(ElogE)
+      + So sánh trọng số: O(1)
+    - Tổng cộng: O(ElogE)
+
+Như vậy, thuật toán tìm được tất cả các cạnh khó trong thời gian O(ElogE).

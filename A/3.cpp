@@ -1,36 +1,47 @@
 #include <iostream>
 #include <vector>
+#include <unordered_map>
+#include <utility> // for std::pair
 #include <algorithm>
+
 using namespace std;
 
-int countParallelEdges(vector<pair<int, int>> edges) {
-  int count = 0;
+int countParallelEdges(const vector<pair<int, int>>& edges) {
+    unordered_map<pair<int, int>, int> edgeCount;
 
-  sort(edges.begin(), edges.end());
-
-  for(int i = 0; i < edges.size()-1; i++) {
-    if(edges[i].first == edges[i+1].first &&
-       edges[i].second == edges[i+1].second) {
-      count++;
+    for (const auto& edge : edges) {
+        edgeCount[edge]++;
     }
-  }
 
-  return count;
+    int parallelEdges = 0;
+    for (const auto& entry : edgeCount) {
+        if (entry.second > 1) {
+            parallelEdges += entry.second - 1;
+        }
+    }
+
+    return parallelEdges;
 }
 
 int main() {
-  int n;
-  cin >> n;
+    int n;
+    cin >> n;
 
-  vector<pair<int, int>> edges;
+    if (n < 0) {
+        return 1;
+    }
 
-  int u, v;
-  for(int i = 0; i < n; i++) {
-    cin >> u >> v;
-    edges.push_back({u, v});
-  }
+    vector<pair<int, int>> edges;
 
-  cout << countParallelEdges(edges);
+    int u, v;
+    for (int i = 0; i < n; i++) {
+        cin >> u >> v;
+        edges.emplace_back(u, v);
+    }
 
-  return 0;
+    int parallelEdges = countParallelEdges(edges);
+
+    cout << "Number of parallel edges: " << parallelEdges << endl;
+
+    return 0;
 }

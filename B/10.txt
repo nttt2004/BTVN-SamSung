@@ -1,0 +1,20 @@
+10, mô tả thuật toán:
+
+Thuật toán tìm thành phần liên thông mạnh chứa đỉnh v:
+
+- Duyệt DFS từ v, đánh dấu tất cả các đỉnh trên đường đi
+- Lặp lại tương tự từ các láng giềng của v nếu chưa được đánh dấu
+- Tập các đỉnh được đánh dấu tạo thành thành phần liên thông mạnh chứa v
+
+Độ phức tạp: O(V+E)
+
+
+Thuật toán tìm tất cả các thành phần liên thông mạnh:
+
+- Xét từng đỉnh chưa xét: gọi thuật toán trên tìm thành phần chứa nó 
+- Nếu tập đỉnh trả về khác NULL: đánh dấu các đỉnh đó là đã xét
+- Lặp lại cho tới khi tất cả đỉnh đều được xét
+
+Độ phức tạp: O(V(V+E))
+
+Các thành phần tìm được là các thành phần liên thông mạnh của đồ thị.

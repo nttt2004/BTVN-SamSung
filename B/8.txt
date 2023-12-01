@@ -1,0 +1,19 @@
+Thuật toán trên sử dụng BFS để đánh dấu các đỉnh theo thứ tự khoảng cách tới nguồn. Tuy nhiên, cách làm này không đảm bảo cho ra một thứ tự tô pô hợp lệ.
+
+Lý do là vì thứ tự tô pô yêu cầu các đỉnh kề phải được xếp liên tiếp. Nhưng ở đây, ta chỉ đảm bảo rằng các đỉnh cùng khoảng cách tới nguồn được đánh dấu liên tiếp. Còn thứ tự của chúng có thể là bất kỳ.
+
+Ví dụ đồ thị sau:
+
+
+        A
+      /   \
+    B       C
+   / \     / \
+  D   E   F   G
+ 
+
+Khi chạy BFS từ A, ta có thứ tự đánh dấu là: A, B, C, D, E, F, G
+
+Nhưng đây không phải là thứ tự tô pô hợp lệ vì B và C, D và E không kề nhau.
+
+Như vậy, chỉ sử dụng BFS và đánh dấu thứ tự khoảng cách không đủ để tạo ra thứ tự tô pô. Cần kết hợp với thêm kỹ thuật nào đó.

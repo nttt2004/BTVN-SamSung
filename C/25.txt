@@ -1,0 +1,18 @@
+Ý tưởng tính MST cho đồ thị lớn chỉ vừa đủ bộ nhớ lưu V cạnh:
+
+- Chia đồ thị ra thành các phần (ví dụ 1000 đỉnh mỗi phần)
+
+- Áp dụng thuật toán Prim trên từng phần riêng lẻ để tìm MST của phần đó
+
+- Lưu lại các cạnh nối giữa các phần, sắp xếp chúng theo trọng số tăng dần
+
+- Duyệt từ đầu danh sách các cạnh liên phần: 
+    + Kiểm tra xem chúng có tạo thành chu trình với MST hiện tại hay không (dùng Union-Find)
+    + Nếu không thì thêm cạnh đó vào MST
+    + Chỉ cần duy trì trong bộ nhớ MST hiện tại (có độ lớn ~ V)
+    
+- Kết quả là MST của cả đồ thị
+
+Độ phức tạp: O(E.logV)
+
+Ưu điểm là có thể tính MST cho đồ thị với hàng triệu đỉnh, tỉ cạnh.
